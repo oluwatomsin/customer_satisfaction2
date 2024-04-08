@@ -2,7 +2,7 @@ from abc import ABC, abstractmethod
 import logging
 import pandas as pd
 
-from sklearn.linear_model import LogisticRegression
+from sklearn.ensemble import RandomForestClassifier
 from sklearn.base import ClassifierMixin
 
 
@@ -25,7 +25,7 @@ class LogisticRegressionModel(Model):
     """
     def train(
             self,
-            X_train: pd.DataFrame, y_train: pd.DataFrame) -> ClassifierMixin:
+            X_train: pd.DataFrame, y_train: pd.Series) -> ClassifierMixin:
         """Trains Logistic Model
 
         Args:
@@ -33,7 +33,7 @@ class LogisticRegressionModel(Model):
             y_train (pd.DataFrame): The training data[dep variable]
         """
         try:
-            reg = LogisticRegression()
+            reg = RandomForestClassifier()
             reg.fit(X_train, y_train)
             logging.info("Training of model completed")
             return reg

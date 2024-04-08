@@ -3,6 +3,7 @@ from sklearn.base import ClassifierMixin
 from src.evaluation import PrecisionScore, FScore, AccuracyScore
 
 from typing import Tuple
+import pandas as pd
 from typing_extensions import Annotated
 import numpy as np
 from zenml import step
@@ -11,7 +12,7 @@ from zenml import step
 @step
 def evaluate_model(
         model: ClassifierMixin,
-        X_test: np.ndarray, y_test: np.ndarray) -> Tuple[
+        X_test: pd.DataFrame, y_test: pd.DataFrame) -> Tuple[
                     Annotated[float, "acc"],
                     Annotated[float, "pre"],
                     Annotated[float, "f1"]]:

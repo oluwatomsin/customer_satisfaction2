@@ -10,8 +10,8 @@ from src.model_dev import LogisticRegressionModel
 @step
 def train_model(
         X_train: pd.DataFrame,
-        y_train: pd.DataFrame,
-        config=ModelNameConfig) -> ClassifierMixin:
+        y_train: pd.Series,
+        config: ModelNameConfig) -> ClassifierMixin:
     """Model training step.
 
     Args:
@@ -19,13 +19,15 @@ def train_model(
         y_train (pd.DataFrame): The training data[dep variable]
     """
     try:
-        if config.model_name == "LogisticRegression":
+        model = None
+        if config.model_name == "RandomForestClassifier":
             model = LogisticRegressionModel().train(
                 X_train=X_train,
                 y_train=y_train)
             return model
         else:
             logging.error("Model name not recognized")
+            raise ValueError("Model not supported")
     except Exception as e:
-        logging.error("An error occured while training {}".format(e))
+        logging.error("An error occurred while training {}".format(e))
         raise e

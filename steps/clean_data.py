@@ -19,11 +19,11 @@ def clean_df(df: pd.DataFrame) -> Tuple[
     try:
         preprocessing_strategy = DataPreprocessingStrategy()
         cleaner = DataCleaning(df, strategy=preprocessing_strategy)
-        clean_df = cleaner.handle_data()
+        cleaned_df = cleaner.handle_data()
 
         # Splitting strategy
         split_strategy = DataSplitStrategy()
-        splitter = DataCleaning(clean_df, strategy=split_strategy)
+        splitter = DataCleaning(cleaned_df, strategy=split_strategy)
         X_train, X_test, y_train, y_test = splitter.handle_data()
         logging.info("Data loading and preprocessing completed")
         return X_train, X_test, y_train, y_test

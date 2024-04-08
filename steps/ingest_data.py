@@ -23,7 +23,8 @@ class IngestData:
             pd.DataFrame: The file as a DataFrame.
         """
         logging.info(f"Loading data from {self.file_path}")
-        return pd.read_csv(self.file_path)
+        data = pd.read_csv(self.file_path)
+        return data
 
 
 @step
@@ -42,4 +43,4 @@ def ingest_df(data_path: str) -> pd.DataFrame:
         return data
     except Exception as e:
         logging.info(f"An error occurred while ingesting data: {e}")
-        raise e 
+        raise e
