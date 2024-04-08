@@ -1,13 +1,19 @@
 import logging
 from sklearn.base import ClassifierMixin
-from .config import ModelNameConfig
-
 import pandas as pd
+
+import mlflow
 from zenml import step
+from zenml.client import Client
+
+from .config import ModelNameConfig
 from src.model_dev import LogisticRegressionModel
 
 
-@step
+experiment_tracker = Client().active_stack.experiment_tracker
+
+
+@step(experiment_tracker=experiment_tracker.name)
 def train_model(
         X_train: pd.DataFrame,
         y_train: pd.Series,
@@ -21,6 +27,7 @@ def train_model(
     try:
         model = None
         if config.model_name == "RandomForestClassifier":
+            mlflow.sklearn.autolog()
             model = LogisticRegressionModel().train(
                 X_train=X_train,
                 y_train=y_train)
